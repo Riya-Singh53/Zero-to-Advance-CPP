@@ -1,18 +1,22 @@
 # 2. Class and Object
 
-## What is a Class?
+Class and Object are the foundation of Object-Oriented Programming (OOP). Every OOP concept starts with understanding these two terms.
 
-A **Class** is a **user-defined data type** that acts as a **blueprint (template)** for creating objects.
+---
+
+# What is a Class?
+
+A **Class** is a **blueprint** or **template** for creating objects.
 
 It defines:
-- Data (Data Members / Attributes)
-- Functions (Member Functions / Methods)
+- Data Members (Variables)
+- Member Functions (Methods)
 
-A class itself **does not occupy memory**. Memory is allocated only when objects of the class are created.
+A class **does not occupy memory** until an object is created.
 
-### Interview Definition
+## Interview Definition
 
-> A class is a blueprint or template that defines the properties (data members) and behaviors (member functions) of an object.
+> A class is a user-defined data type that groups data members and member functions into a single unit. It acts as a blueprint for creating objects.
 
 ---
 
@@ -27,7 +31,7 @@ class ClassName
 };
 ```
 
-### Example
+Example:
 
 ```cpp
 #include <iostream>
@@ -41,8 +45,7 @@ public:
 
     void display()
     {
-        cout << "Name: " << name << endl;
-        cout << "Age : " << age << endl;
+        cout << name << " " << age << endl;
     }
 };
 ```
@@ -61,18 +64,22 @@ An **Object** is an **instance of a class**.
 
 When an object is created:
 - Memory is allocated.
-- Data members get their own memory.
+- Data members are initialized.
 - Member functions become accessible.
 
-Think of a class as a blueprint and an object as the real product built from that blueprint.
+## Interview Definition
 
-### Interview Definition
-
-> An object is a real-world instance of a class that occupies memory and can access the data members and member functions defined in the class.
+> An object is a real-world entity and an instance of a class that occupies memory and can access the class's data members and member functions.
 
 ---
 
-## Creating an Object
+## Syntax
+
+```cpp
+ClassName objectName;
+```
+
+Example
 
 ```cpp
 Student s1;
@@ -85,311 +92,212 @@ Here,
 
 ---
 
-## Complete Example
-
-```cpp
-#include <iostream>
-using namespace std;
-
-class Student
-{
-public:
-    string name;
-    int age;
-
-    void display()
-    {
-        cout << "Name: " << name << endl;
-        cout << "Age : " << age << endl;
-    }
-};
-
-int main()
-{
-    Student s1;
-
-    s1.name = "Riya";
-    s1.age = 22;
-
-    s1.display();
-
-    return 0;
-}
-```
-
-### Output
-
-```
-Name: Riya
-Age : 22
-```
-
----
-
 # Class vs Object
 
 | Class | Object |
 |--------|--------|
-| Blueprint | Instance of a class |
+| Blueprint | Instance of class |
 | Logical entity | Physical entity |
 | No memory allocated | Memory is allocated |
-| Defines data and functions | Uses data and functions |
-| Can create many objects | Belongs to one class |
+| Defines properties | Uses properties |
+| Created once | Multiple objects can be created |
 
-### Real-Life Example
+Example
 
 ```
-Class → Car
+Class  → Car
 
 Objects →
-
 BMW
 Audi
 Tesla
 ```
 
-Another example:
+---
+
+# Empty Class
+
+An empty class has no data members and no member functions.
+
+```cpp
+class Empty
+{
+};
+```
+
+## Can we create an object?
+
+Yes.
+
+```cpp
+Empty e1;
+```
+
+## Size of Empty Class
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Empty
+{
+};
+
+int main()
+{
+    cout << sizeof(Empty);
+}
+```
+
+Output
 
 ```
-Class → Student
-
-Objects →
-
-Riya
-Rahul
-Ankit
+1
 ```
+
+### Why is the size 1 byte?
+
+A class cannot have zero size because every object must have a unique memory address.
+
+The compiler allocates **1 byte** so that different objects have different addresses.
 
 ---
 
 # Memory Allocation of Objects
 
-A **class does not occupy memory**.
+A class itself **does not consume memory**.
 
 Memory is allocated **only when an object is created**.
 
-Example:
+Example
 
 ```cpp
 class Student
 {
 public:
     int id;
-    char grade;
+    float marks;
 };
-
-int main()
-{
-    Student s1;
-}
 ```
 
-Memory is allocated only for:
+Memory allocation:
 
 ```
-id
-grade
+Student (Class)
+
+No Memory
 ```
 
-### Important Points
-
-- Every object has its own copy of **non-static data members**.
-- Member functions are **shared** among all objects.
-- Static members are shared by all objects.
-
----
-
-## Memory Representation
-
-```
-Class
-
-Student
-
-id
-name
-display()
-
-        ↓
-
-Object 1 (s1)
-
-id
-name
-
-        ↓
-
-Object 2 (s2)
-
-id
-name
-```
-
-Notice:
-
-- `id` and `name` are different for every object.
-- `display()` exists only once in memory and is shared.
-
----
-
-## Example
-
-```cpp
-#include <iostream>
-using namespace std;
-
-class Student
-{
-public:
-    int age;
-};
-
-int main()
-{
-    Student s1;
-    Student s2;
-
-    s1.age = 20;
-    s2.age = 25;
-
-    cout << s1.age << endl;
-    cout << s2.age << endl;
-}
-```
-
-### Output
-
-```
-20
-25
-```
-
-Each object stores its own value.
-
----
-
-# Object Lifecycle
-
-An object goes through four stages during its lifetime.
-
-```
-Creation
-      ↓
-Initialization
-      ↓
-Usage
-      ↓
-Destruction
-```
-
----
-
-## 1. Creation
-
-Memory is allocated.
+When object is created:
 
 ```cpp
 Student s1;
 ```
 
+Memory:
+
+```
+s1
+
+id
+marks
+```
+
+Each object gets its own copy of **non-static data members**.
+
+Member functions are stored only once and shared by all objects.
+
+---
+
+# How Object Memory is Organized
+
+Example
+
+```cpp
+class Student
+{
+public:
+    int id;
+    float marks;
+
+    void display()
+    {
+    }
+};
+```
+
+Memory
+
+```
+Object s1
+
+-----------------
+id
+marks
+-----------------
+
+display() → Shared
+```
+
+Objects store only variables.
+
+Functions are not duplicated for every object.
+
+---
+
+# Object Lifecycle
+
+Every object goes through four stages.
+
+## 1. Declaration
+
+```cpp
+Student s1;
+```
+
+Memory is allocated.
+
 ---
 
 ## 2. Initialization
 
+```cpp
+s1.id = 101;
+```
+
 Values are assigned.
-
-```cpp
-s1.age = 22;
-```
-
-or
-
-```cpp
-Student s1(22);
-```
-
-(using a constructor)
 
 ---
 
 ## 3. Usage
 
-Member functions are called.
-
 ```cpp
 s1.display();
 ```
+
+Object performs operations.
 
 ---
 
 ## 4. Destruction
 
-When the object goes out of scope, its destructor is automatically called.
+When the object goes out of scope, it is automatically destroyed.
 
 ```cpp
 {
     Student s1;
 }
-
-// Destructor is called here.
 ```
+
+Here `s1` is destroyed after leaving the block.
 
 ---
 
 # Accessing Members Using Dot (.) Operator
 
-The **dot (`.`) operator** is used to access the data members and member functions of an object.
+The dot (`.`) operator is used to access an object's data members and member functions.
 
-### Syntax
-
-```cpp
-objectName.member;
-objectName.function();
-```
-
-### Example
-
-```cpp
-#include <iostream>
-using namespace std;
-
-class Car
-{
-public:
-    string brand;
-
-    void show()
-    {
-        cout << brand;
-    }
-};
-
-int main()
-{
-    Car c1;
-
-    c1.brand = "BMW";
-    c1.show();
-}
-```
-
-### Output
-
-```
-BMW
-```
-
----
-
-# Multiple Objects
-
-A class can have **multiple objects**.
-
-Each object has:
-- Its own data members
-- Shared member functions
-
-### Example
+Example
 
 ```cpp
 #include <iostream>
@@ -399,98 +307,38 @@ class Student
 {
 public:
     string name;
+    int age;
 
     void display()
     {
-        cout << name << endl;
+        cout << name << " " << age;
     }
 };
 
 int main()
 {
     Student s1;
-    Student s2;
-    Student s3;
 
     s1.name = "Riya";
-    s2.name = "Rahul";
-    s3.name = "Ankit";
+    s1.age = 23;
 
     s1.display();
-    s2.display();
-    s3.display();
 }
 ```
 
-### Output
+Output
 
 ```
-Riya
-Rahul
-Ankit
+Riya 23
 ```
 
-Each object stores its own data independently.
-
 ---
 
-# Real-World Example
+# Multiple Objects
 
-```
-Class
+A class can have any number of objects.
 
-Employee
-
-Data:
------
-Employee ID
-Name
-Salary
-
-Functions:
----------
-login()
-work()
-logout()
-
-            ↓
-
-Objects
-
-Employee1
-Employee2
-Employee3
-```
-
-Each employee has different data but uses the same functions.
-
----
-
-# Frequently Asked Interview Questions
-
-### 1. Does a class occupy memory?
-
-**Answer:** No. A class is only a blueprint. Memory is allocated only when an object is created.
-
----
-
-### 2. Where are member functions stored?
-
-**Answer:** Member functions are stored only once in memory and are shared by all objects.
-
----
-
-### 3. Does every object have its own copy of data members?
-
-**Answer:** Yes. Every object has its own copy of non-static data members.
-
----
-
-### 4. Can one class create multiple objects?
-
-**Answer:** Yes. A single class can create any number of objects.
-
-Example:
+Example
 
 ```cpp
 Student s1;
@@ -498,73 +346,252 @@ Student s2;
 Student s3;
 ```
 
----
-
-### 5. Which operator is used to access class members?
-
-**Answer:** The dot (`.`) operator is used to access members of an object.
-
-Example:
+Each object has its own copy of data members.
 
 ```cpp
-s1.display();
+s1.age = 20;
+s2.age = 25;
+```
+
+Changing one object does not affect another.
+
+---
+
+# Memory Representation
+
+```
+Student Class
+
+id
+name
+
+        ↓
+
+-------------------
+Object s1
+id = 1
+name = Riya
+-------------------
+
+-------------------
+Object s2
+id = 2
+name = Rahul
+-------------------
+```
+
+Both objects share the same member functions but have different data.
+
+---
+
+# Object Initialization
+
+Objects can be initialized after creation.
+
+```cpp
+Student s1;
+
+s1.name = "Riya";
 s1.age = 22;
 ```
+
+Or using a constructor (covered later).
+
+```cpp
+Student s1("Riya", 22);
+```
+
+---
+
+# Object Assignment
+
+Objects of the same class can be assigned.
+
+```cpp
+Student s1;
+Student s2;
+
+s2 = s1;
+```
+
+This performs **member-wise copy** by default (shallow copy).
+
+---
+
+# Array of Objects
+
+We can create multiple objects using an array.
+
+```cpp
+Student students[5];
+```
+
+Each element is a separate object.
+
+Access:
+
+```cpp
+students[0].name = "Riya";
+students[1].name = "Rahul";
+```
+
+---
+
+# Object Size
+
+The size of an object depends on:
+
+- Data members
+- Padding (Memory Alignment)
+- Virtual Pointer (`vptr`) if virtual functions are used
+
+Member functions do **not** increase object size.
+
+Example
+
+```cpp
+class Test
+{
+public:
+    int x;
+
+    void show()
+    {
+    }
+};
+```
+
+```
+sizeof(Test)
+
+4 Bytes
+```
+
+Only `x` occupies memory.
+
+---
+
+# Where are Class Members Stored?
+
+| Member | Stored In |
+|---------|-----------|
+| Non-static data members | Inside each object |
+| Static data members | Separate static memory |
+| Member functions | Code/Text segment (shared by all objects) |
+| Static member functions | Code/Text segment |
+| Virtual table (vtable) | Program memory |
+| Virtual pointer (vptr) | Inside each object (if virtual functions exist) |
+
+---
+
+# this Pointer (Introduction)
+
+Every non-static member function receives a hidden pointer called `this`.
+
+Example
+
+```cpp
+class Student
+{
+public:
+    int age;
+
+    void setAge(int age)
+    {
+        this->age = age;
+    }
+};
+```
+
+`this` points to the object that invoked the function.
+
+> **Note:** `this` pointer is explained in detail in a separate topic.
+
+---
+
+# Common Interview Questions
+
+### Does a class occupy memory?
+
+**No.** A class is only a blueprint. Memory is allocated when an object is created.
+
+---
+
+### Do member functions occupy object memory?
+
+**No.** Member functions are stored only once and shared by all objects.
+
+---
+
+### Why is an empty class size 1 byte?
+
+To ensure every object has a unique memory address.
+
+---
+
+### Can multiple objects share data members?
+
+No. Each object has its own copy of non-static data members.
+
+---
+
+### Can multiple objects share member functions?
+
+Yes. Member functions are stored only once and shared by all objects.
+
+---
+
+### Which operator is used to access object members?
+
+The dot (`.`) operator.
+
+---
+
+### Can we create an array of objects?
+
+Yes.
+
+```cpp
+Student students[10];
+```
+
+---
+
+# Key Points
+
+- Class = Blueprint
+- Object = Instance of a class
+- Class does not occupy memory.
+- Objects occupy memory.
+- Objects have separate copies of data members.
+- Member functions are shared by all objects.
+- Empty class size = 1 byte.
+- Objects access members using the dot (`.`) operator.
+- Multiple objects can be created from one class.
+- Objects are automatically destroyed when they go out of scope.
 
 ---
 
 # Quick Revision
 
-## Class
+✅ Class → Blueprint
 
-- Blueprint for creating objects.
-- Defines data members and member functions.
-- Does not occupy memory.
+✅ Object → Instance of Class
 
-## Object
+✅ Memory is allocated only for objects.
 
-- Instance of a class.
-- Occupies memory.
-- Can access class members.
+✅ Member Functions are shared.
 
-## Memory
+✅ Data Members are unique for every object.
 
-- Class → No memory.
-- Object → Memory allocated.
-- Data members → Separate copy for each object.
-- Member functions → Shared by all objects.
+✅ Empty Class Size = 1 Byte
 
-## Object Lifecycle
+✅ Access Members → Dot (`.`) Operator
 
-```
-Creation
-   ↓
-Initialization
-   ↓
-Usage
-   ↓
-Destruction
-```
+✅ Multiple Objects can be created from the same class.
 
-## Dot (`.`) Operator
-
-```cpp
-object.member;
-object.function();
-```
-
-## Multiple Objects
-
-```cpp
-Student s1;
-Student s2;
-Student s3;
-```
-
-Each object has its own data but shares the same member functions.
-
----
-
-# Interview Summary (30 Seconds)
-
-> A **class** is a blueprint that defines the data members and member functions of an object. It does not occupy memory. An **object** is an instance of a class that occupies memory and can access the class members using the dot (`.`) operator. Each object has its own copy of non-static data members, while member functions are shared among all objects. An object's lifecycle consists of creation, initialization, usage, and destruction.
+✅ Object Lifecycle:
+1. Declaration
+2. Initialization
+3. Usage
+4. Destruction
